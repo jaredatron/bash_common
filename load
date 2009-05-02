@@ -7,9 +7,9 @@ declare -i load_senseLastCheckout;
 load_now=`date +%s`;
 if [ `uname` = Darwin ]
 then
-  load_lastCheckout=`stat -t %s -f %c ~/.deadlyicon/.svn`;
+  load_lastCheckout=`stat -t %s -f %c $BASH_COMMON_PATH/.git`;
 else
-  load_lastCheckout=`date +%s -r ~/.deadlyicon/.svn`;
+  load_lastCheckout=`date +%s -r $BASH_COMMON_PATH/.git`;
 fi
 load_senseLastCheckout=`expr $load_now - $load_lastCheckout`;
 
