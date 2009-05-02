@@ -1,0 +1,160 @@
+#!/bin/bash
+# DeadlyiCoN's common bash aliases
+#
+
+# Turns the Meta Key on
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+
+export HOSTFILE=$HOME/.deadlyicon/hosts
+export SVN_EDITOR='vi'
+export EDITOR='vi'
+
+export HISTCONTROL=erasedups
+export HISTSIZE=10000
+shopt -s cmdhist
+shopt -s histappend # this ensures history is written
+shopt -s lithist
+
+
+# Prompt
+export PROMPT_COLOR=33
+export PROMPT_COMMAND="PS1='\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] '"
+ 
+PS1='\[\033[1;33m\]\w :\[\033[0m\] '
+
+# doesnt tab complete hidden files like .svn files
+bind 'set match-hidden-files off'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias cll='clear;ll'
+alias ls='ls --color'
+alias l='ls -Bh'
+alias la='ls -Bh'
+alias lc='ls -Bh'
+alias ll='ls -Blh'
+alias lll='ls -Blah'
+alias lt='ls -Blh  --sort=time'
+alias lls='ls -Bhw 1'
+alias c='clear'
+alias l='ls -lBh'
+alias rm._="find . -name '._*' -exec rm \"{}\" \;"
+alias cdc='cd;clear'
+alias grep='grep --color --exclude=*\.svn*'
+alias g='egrep -i '
+alias df='df -h'
+alias du='du -h'
+alias less='less -r'                          # raw control characters
+alias whence='type -a'                        # where, of a sort
+alias where=whence
+alias ssh-start='ssh-agent | grep -v echo > ~/tmp/ssh-agent-vars; . ~/tmp/ssh-agent-vars;  ssh-add'
+alias gst='git-status'
+alias openfiles='lsof'
+
+
+_history_grep(){
+  if [ "$1" == "" ]; then
+    history
+  else
+    history | grep $*
+  fi
+}
+alias h='_history_grep'
+
+#alias dirsize='for DRCT in `ls --width=1 | grep /`; do du -s $DRCT; done;'
+#alias dirsize="du -s * | egrep '^[0-9]+(\.[0-9]+)*G' | sort; du -s * | egrep '^[0-9]+(\.[0-9]+)*M' | sort"
+#alias dirsize='du -hs $1 | sort_file_sizes';
+dirsize () { du -hs $1 | sort_file_sizes ; }
+tar2ssh () { 
+ echo tar -vczp $3 \| ssh $1 "cat > $2" ; 
+ tar -vczp $3 | ssh $1 "cat > $2" ; 
+}
+
+find(){
+  dir=$1
+  shift
+  env find "$dir" $* | grep -v .svn
+}
+
+psgrep(){
+  ps auxwww | grep -i $*
+}
+svnStatus(){
+  states=$1
+  shift
+  location=$1
+  shift
+  svn st $location | egrep '^['$states']+' | perl -pe 's/^['$states']+\s+(.*)$/"$1"/' 
+}
+svnURL(){
+  svn info $1 | grep URL | awk '{print $2}'
+}
+svnForeach(){
+  states=$1
+  shift
+  svnStatus $states | xargs $*
+}
+svnDeversioniz(){
+  find $1 -name .svn | xargs rm -rf
+}
+alias svnDeversionize=svnDeversioniz
+
+
+# GemDoc 
+export GEMDIR=`gem env gemdir`
+gemdoc() {
+  open $GEMDIR/doc/`$(which ls) $GEMDIR/doc | grep $1 | sort | tail -1`/rdoc/index.html
+}
+_gemdoc() {
+  COMPREPLY=($(compgen -W '$(`which ls` $GEMDIR/doc)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _gemdoc gemdoc
+
+# this doesnt quite work yet
+#foreachDir(){
+# for dir in `find . -type d`; do $* ;done
+#}
+
+# this was used to check if the .bash_profile was run in screen
+# in .bash_profile :
+#   ~/.ssh/authorized_keys2
+#
+# in .bashrc :
+#   because screen doesnt execute .bash_profile
+#    if [ "`alias bash_profile_exec 2>&1`" != "alias bash_profile_exec='yes'" ]; then
+#      . ~/.bash_profile;
+#    fi
+
+
+alias vi='vim'
+# is we have a custom .vimrc file set and alias to use it
+if [ -e "${HOME}/.deadlyicon/vimrc" ] ; then
+  alias vi='vim -u ~/.deadlyicon/vimrc'
+fi
+
+## Set PATH so it includes user's private bin if it exists
+if [ -d "/usr/sbin/" ] ; then
+  PATH="/usr/sbin/":${PATH}
+fi
+
+## Set PATH so it includes user's private bin if it exists
+if [ -d "/usr/local/bin/" ] ; then
+  PATH="/usr/local/bin/":${PATH}
+fi
+
+## Set PATH so it includes user's private bin if it exists
+if [ -d "${HOME}/bin/" ] ; then
+  PATH="${HOME}/bin/":${PATH}
+fi
+
+export PATH
+
+# source local file if we have one
+if [ -e "${HOME}/.deadlyicon/local" ] ; then
+  source "${HOME}/.deadlyicon/local"
+fi
