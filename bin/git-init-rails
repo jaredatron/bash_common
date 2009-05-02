@@ -1,0 +1,26 @@
+#!/bin/sh
+
+git init
+
+cat <<EOF > .gitignore 
+.DS_Store 
+log/*
+log/*.log
+tmp/[^.]*
+db/*.sqlite3
+coverage 
+doc/app/*
+EOF
+
+cat <<EOF > log/.gitignore 
+*.log 
+EOF
+
+cat <<EOF > db/.gitignore 
+*.sqlite3 
+EOF
+
+find . -type d -empty -exec touch {}/.gitignore \;
+
+git add . 
+git commit -a -m "Initial import." 

@@ -8,7 +8,8 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
-export HOSTFILE=$HOME/.deadlyicon/hosts
+export PATH=$BASH_COMMON_PATH/bin:$PATH
+export HOSTFILE=$BASH_COMMON_PATH/hosts
 export SVN_EDITOR='vi'
 export EDITOR='vi'
 
@@ -133,8 +134,8 @@ complete -o default -o nospace -F _gemdoc gemdoc
 
 alias vi='vim'
 # is we have a custom .vimrc file set and alias to use it
-if [ -e "${HOME}/.deadlyicon/vimrc" ] ; then
-  alias vi='vim -u ~/.deadlyicon/vimrc'
+if [ -e "$BASH_COMMON_PATH/vimrc" ] ; then
+  alias vi='vim -u $BASH_COMMON_PATH/vimrc'
 fi
 
 ## Set PATH so it includes user's private bin if it exists
@@ -155,6 +156,6 @@ fi
 export PATH
 
 # source local file if we have one
-if [ -e "${HOME}/.deadlyicon/local" ] ; then
-  source "${HOME}/.deadlyicon/local"
+if [ -e "$BASH_COMMON_PATH/local" ] ; then
+  source "$BASH_COMMON_PATH/local"
 fi
