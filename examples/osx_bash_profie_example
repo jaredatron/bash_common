@@ -1,0 +1,122 @@
+#!/bin/bash
+
+export BASH_COMMON_PATH=~/.bash_common #or wherever
+if [ -f $BASH_COMMON_PATH/load ]; then
+	. $BASH_COMMON_PATH/load
+fi
+
+## Set PATH so it includes user's private script dir if it exists
+if [ -d ~/Library/Scripts ] ; then
+	PATH=~/Library/Scripts:$PATH
+fi
+
+if [ -d ~/.gem/ruby/1.8/bin ] ; then
+	PATH=~/.gem/ruby/1.8/bin:$PATH
+fi
+
+export HISTSIZE=100000
+bind "set completion-ignore-case on"
+export PROMPT_COLOR=34
+
+# export RSPEC=true
+# export AUTOFEATURE=true
+
+export LC_CTYPE=en_US.UTF-8
+export HISTFILESIZE=1000
+export HISTSIZE=1000
+export HTTPD_CONF="/private/etc/apache2/httpd.conf"
+export HTTPD_LOGS="/private/var/log/apache2/"
+export photoshop='/Applications/Adobe Photoshop CS3/Adobe Photoshop CS3.app'
+export EDITOR='mate -w '
+#export SVN_EDITOR='mate -w ' this got annoying
+export SVN_EDITOR='vi'
+
+export JAVA_HOME=/Library/Java/Home/
+
+# Amazon EC2
+export EC2_PRIVATE_KEY=/Users/deadlyicon/.ec2/pk-ZA6KSNJWK3BSMDIPEL65YEW2RO7HT6OK.pem
+export EC2_CERT=/Users/deadlyicon/.ec2/cert-ZA6KSNJWK3BSMDIPEL65YEW2RO7HT6OK.pem
+export EC2_HOME=/Applications/java/ec2-api-tools-1.3-34128
+export PATH=$EC2_HOME/bin:$PATH
+
+#alias rsync-toprank="echo rsync -vr --exclude=.* /Applications/MAMP/htdocs/toprank/ toprank@10.142.11.211:/var/www/html/toprank/toprank/"
+#alias rsync-skyfire="echo rsync -vr --exclude=.* /Applications/MAMP/htdocs/skyfire/skyfire/ skyfire@10.142.11.211:/var/www/html/skyfire/skyfire/"
+
+# GIT
+# export GIT_EXTERNAL_DIFF=/usr/local/bin/git-opendiff-proxy
+alias git-diff-filemege='GIT_EXTERNAL_DIFF=/usr/local/bin/git-opendiff-proxy git-diff '
+alias gitk='gitk 0>/dev/null 1>/dev/null 2>/dev/null &'
+
+alias ijs='java org.mozilla.javascript.tools.shell.Main'
+alias jslint='ijs ~/Library/JSLint/jslint.js'
+alias ls='/bin/ls -G'
+# alias mplayer="/Applications/MPlayer\ OS\ X\ 2.app/Contents/Resources/mplayer.app/Contents/MacOS/mplayer"
+alias o='open'
+alias e="mate"
+alias pf="open -a Path\ Finder"
+trash(){
+	mv $* ~/.Trash/.Trash
+}
+export TEXTMATE_BUNDLE_DIR=/Library/Application\ Support/TextMate/Bundles/
+textMateBundleInstaller(){
+ echo moving to ${TEXTMATE_BUNDLE_DIR} 
+ cd "${TEXTMATE_BUNDLE_DIR}"
+ echo Installing $1 
+ svn co "$1" 
+ echo Reloading TextMate Bundles
+ osascript -e 'tell app "TextMate" to reload bundles'
+ echo Returning to last DIR
+ cd -
+}
+alias restart-quicksilver='sudo killall Quicksilver; sleep 1; open /Applications/Quicksilver.app/'
+
+alias wrapinquotes='ruby -e "puts \$stdin.read.split(\"\n\").map{|l| \"\\\"#{l}\\\"\"}" '
+
+# videoToWave(){
+#  mplayer "$1" -ao pcm -ao pcm:file="$1".wav -vc dummy -vo null
+# }
+# audioToWave(){
+#  mplayer "$1" -ao pcm -ao pcm:file="$1".wav
+# }
+# waveToMp3(){
+#  #lame -m m "$1" "$2" --tt "$title" --ta "$author"
+#  lame -m m "$1".wav "$1".mp3 
+# }
+# videoToMp3(){
+#  echo "converting '$1' to wave"
+#  videoToWave "$1" >/dev/null
+#  echo "converting '$1.wav' to mp3"
+#  waveToMp3 "$1" >/dev/null
+#  # rm -f "$1".wav
+# }
+# audioToMp3(){
+#  echo "converting '$1' to wave"
+#  audioToWave "$1" >/dev/null
+#  echo "converting '$1.wav' to mp3"
+#  waveToMp3 "$1" >/dev/null
+#  # rm -f "$1".wav
+# }
+pslist(){
+ ps aux | head -n 1;
+ ps aux | grep -i "$1"
+}
+booksearch(){ 
+ find /Users/deadlyicon/Documents/Books/ -iname "*$1*"; 
+}
+
+
+volume(){
+ osascript -e "set volume $1"
+}
+
+
+export GEMDIR=`gem env gemdir`
+gemdoc() {
+  open $GEMDIR/doc/`$(which ls) $GEMDIR/doc | grep $1 | sort | tail -1`/rdoc/index.html
+}
+_gemdoc() {
+  COMPREPLY=($(compgen -W '$(`which ls` $GEMDIR/doc)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _gemdoc gemdoc
+
