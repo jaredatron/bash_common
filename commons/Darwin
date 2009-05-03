@@ -1,0 +1,53 @@
+#!/bin/bash
+
+## Set PATH so it includes user's private script dir if it exists
+if [ -d ~/Library/Scripts ] ; then
+	PATH=~/Library/Scripts:$PATH
+fi
+
+if [ -d ~/.gem/ruby/1.8/bin ] ; then
+	PATH=~/.gem/ruby/1.8/bin:$PATH
+fi
+
+export HISTSIZE=100000
+bind "set completion-ignore-case on"
+
+export LC_CTYPE=en_US.UTF-8
+export HISTFILESIZE=1000
+export HISTSIZE=1000
+export HTTPD_CONF="/private/etc/apache2/httpd.conf"
+export HTTPD_LOGS="/private/var/log/apache2/"
+#export SVN_EDITOR='mate -w ' this got annoying
+export SVN_EDITOR='vi'
+
+alias ls='/bin/ls -G'
+alias o='open'
+alias e="mate"
+alias pf="open -a Path\ Finder"
+trash(){
+	mv $* ~/.Trash/.Trash
+}
+alias restart-quicksilver='sudo killall Quicksilver; sleep 1; open /Applications/Quicksilver.app/'
+alias wrapinquotes='ruby -e "puts \$stdin.read.split(\"\n\").map{|l| \"\\\"#{l}\\\"\"}" '
+
+pslist(){
+ ps aux | head -n 1;
+ ps aux | grep -i "$1"
+}
+booksearch(){ 
+ find /Users/deadlyicon/Documents/Books/ -iname "*$1*"; 
+}
+volume(){
+ osascript -e "set volume $1"
+}
+
+export GEMDIR=`gem env gemdir`
+gemdoc() {
+  open $GEMDIR/doc/`$(which ls) $GEMDIR/doc | grep $1 | sort | tail -1`/rdoc/index.html
+}
+_gemdoc() {
+  COMPREPLY=($(compgen -W '$(`which ls` $GEMDIR/doc)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _gemdoc gemdoc
+
