@@ -23,4 +23,6 @@ unset load_now;
 unset load_lastCheckout;
 unset load_senseLastCheckout;
 source $BASH_COMMON_PATH/common
-source "$BASH_COMMON_PATH/commons/`uname`"
+if [ -f "$BASH_COMMON_PATH/commons/`uname`" ]; then
+  source "$BASH_COMMON_PATH/commons/`uname`"
+fi
