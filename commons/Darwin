@@ -13,14 +13,14 @@ export HISTSIZE=100000
 bind "set completion-ignore-case on"
 
 export LC_CTYPE=en_US.UTF-8
-export HISTFILESIZE=1000
-export HISTSIZE=1000
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000
 export HTTPD_CONF="/private/etc/apache2/httpd.conf"
 export HTTPD_LOGS="/private/var/log/apache2/"
 #export SVN_EDITOR='mate -w ' this got annoying
 export SVN_EDITOR='vi'
 
-alias ls='/bin/ls -G'
+alias ls='/bin/ls -GF'
 alias o='open'
 alias e="mate"
 alias pf="open -a Path\ Finder"
