@@ -25,7 +25,7 @@ alias o='open'
 alias e="mate"
 alias pf="open -a Path\ Finder"
 trash(){
-	mv $* ~/.Trash/.Trash
+	mv "$*" ~/.Trash/.Trash
 }
 alias restart-quicksilver='sudo killall Quicksilver; sleep 1; open /Applications/Quicksilver.app/'
 alias wrapinquotes='ruby -e "puts \$stdin.read.split(\"\n\").map{|l| \"\\\"#{l}\\\"\"}" '
