@@ -19,12 +19,29 @@ shopt -s cmdhist
 shopt -s histappend # this ensures history is written
 shopt -s lithist
 
+source git-completion.bash
 
 # Prompt
 export PROMPT_COLOR=33
-export PROMPT_COMMAND="PS1='\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] '"
+__git_different(){
+  git diff-files --quiet
+}
+__git_ps1_context_sensative(){
+  if [ $(__git_different) ]; then
+    return "$(__git_ps1 ':[%s] ')"
+  else
+    return "$(__git_ps1 '(%s) ')"
+  fi
+}
+set_ps1(){
+  PS1="\[\033[4;1;$(echo $PROMPT_COLOR)m\]\w\[\033[0m\]$(__git_ps1 '[%s]') "
+  # PS1="\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\]$(__git_ps1 '[%s]') "
+  # PS1="\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] $(__git_ps1_context_sensative)"
+}
+export PROMPT_COMMAND="set_ps1"
+# export PROMPT_COMMAND="PS1='\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] '"
  
-PS1='\[\033[1;33m\]\w :\[\033[0m\] '
+# PS1='\[\033[1;33m\]\w :\[\033[0m\] '
 
 # doesnt tab complete hidden files like .svn files
 bind 'set match-hidden-files off'
