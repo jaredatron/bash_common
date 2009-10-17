@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ## Set PATH so it includes user's private script dir if it exists
-if [ -d ~/Library/Scripts ] ; then
-	PATH=~/Library/Scripts:$PATH
+if [ -d ~/Library/Bin ] ; then
+	PATH=~/Library/Bin:$PATH
 fi
 
 if [ -d ~/.gem/ruby/1.8/bin ] ; then
@@ -24,9 +24,6 @@ alias ls='/bin/ls -GF'
 alias o='open'
 alias e="mate"
 alias pf="open -a Path\ Finder"
-trash(){
-	mv "$*" ~/.Trash/.Trash
-}
 alias restart-quicksilver='sudo killall Quicksilver; sleep 1; open /Applications/Quicksilver.app/'
 alias wrapinquotes='ruby -e "puts \$stdin.read.split(\"\n\").map{|l| \"\\\"#{l}\\\"\"}" '
 
@@ -51,3 +48,4 @@ _gemdoc() {
 }
 complete -o default -o nospace -F _gemdoc gemdoc
 
+shopt -s autocd
