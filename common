@@ -7,6 +7,7 @@ set meta-flag on
 set input-meta on
 set output-meta on
 set convert-meta off
+shift;shift; # I have no idea what set seems to append it args to $*, weird.
 
 export PATH=$BASH_COMMON_PATH/bin:$PATH
 export HOSTFILE=$BASH_COMMON_PATH/hosts
