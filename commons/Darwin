@@ -48,4 +48,4 @@ _gemdoc() {
 }
 complete -o default -o nospace -F _gemdoc gemdoc
 
-shopt -s autocd
+# shopt -s autocd
