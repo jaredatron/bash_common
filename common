@@ -161,8 +161,8 @@ if [ -d "/usr/sbin/" ] ; then
 fi
 
 ## Set PATH so it includes user's private bin if it exists
-if [ -d "/usr/local/bin/" ] ; then
-  PATH="/usr/local/bin/":${PATH}
+if [ -d "/usr/local/bin" ] ; then
+  PATH="/usr/local/bin":${PATH}
 fi
 
 ## Set PATH so it includes user's private bin if it exists
