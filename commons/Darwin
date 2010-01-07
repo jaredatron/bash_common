@@ -49,3 +49,5 @@ _gemdoc() {
 complete -o default -o nospace -F _gemdoc gemdoc
 
 # shopt -s autocd
+
+alias hibernate="sudo pmset -a hibernatemode 5; sudo shutdown -s now && sudo pmset -a hibernatemode 3"
