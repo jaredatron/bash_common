@@ -72,6 +72,7 @@ alias where=whence
 alias ssh-start='ssh-agent | grep -v echo > ~/tmp/ssh-agent-vars; . ~/tmp/ssh-agent-vars;  ssh-add'
 alias gst='git-status'
 alias openfiles='lsof'
+alias diffmate="cat > /tmp/diffmate.diff && e /tmp/diffmate.diff"
 
 
 _history_grep(){
@@ -170,7 +171,7 @@ if [ -d "${HOME}/bin/" ] ; then
   PATH="${HOME}/bin/":${PATH}
 fi
 
-PATH=.bin:${PATH}
+PATH=.bin:bin:script:${PATH}
 
 export PATH
 
