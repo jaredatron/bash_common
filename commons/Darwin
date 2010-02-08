@@ -52,6 +52,8 @@ complete -o default -o nospace -F _gemdoc gemdoc
 
 alias hibernate="sudo pmset -a hibernatemode 5; sudo shutdown -s now && sudo pmset -a hibernatemode 3"
 
+alias resource='(cd ~; source .bash_profile)'
+
 set_title(){
   export TITLE=$*
   _set_title
