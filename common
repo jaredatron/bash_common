@@ -39,9 +39,10 @@ set_ps1(){
   # PS1="\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\]$(__git_ps1 '[%s]') "
   # PS1="\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] $(__git_ps1_context_sensative)"
 }
-export PROMPT_COMMAND="set_ps1"
-# export PROMPT_COMMAND="PS1='\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] '"
- 
+
+export PROMPT_COMMAND="set_ps1; ${PROMPT_COMMAND}"
+# export PROMPT_COMMAND="PS1='\[\033[4;1;'\$PROMPT_COLOR'm\]\w\[\033[0m\] '; ${PROMPT_COMMAND}"
+
 # PS1='\[\033[1;33m\]\w :\[\033[0m\] '
 
 # doesnt tab complete hidden files like .svn files

@@ -51,3 +51,12 @@ complete -o default -o nospace -F _gemdoc gemdoc
 # shopt -s autocd
 
 alias hibernate="sudo pmset -a hibernatemode 5; sudo shutdown -s now && sudo pmset -a hibernatemode 3"
+
+set_title(){
+  export TITLE=$*
+  _set_title
+}
+_set_title(){
+  echo -ne "\033]0;${TITLE}\007"
+}
+export PROMPT_COMMAND="${PROMPT_COMMAND} _set_title"
