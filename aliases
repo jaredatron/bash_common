@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias cll='clear;ll'
+alias ls='ls --color'
+alias l='ls -Bh1'
+alias la='ls -Bh'
+alias lc='ls -Bh'
+alias ll='l -l'
+alias lll='ls -Blah'
+alias lt='ls -Blh  --sort=time'
+alias lls='ls -Bhw 1'
+alias c='clear'
+alias rm._="find . -name '._*' -exec rm \"{}\" \;"
+alias cdc='cd;clear'
+alias vi='vim'
+alias vim='vim -u $BASH_COMMON_PATH/vimrc'
+alias grep='grep --color --exclude=*\.svn*'
+alias g='egrep -i '
+alias df='df -h'
+alias du='du -h'
+alias less='less -r'                          # raw control characters
+alias whence='type -a'                        # where, of a sort
+alias where=whence
+alias ssh-start='ssh-agent | grep -v echo > ~/tmp/ssh-agent-vars; . ~/tmp/ssh-agent-vars;  ssh-add'
+alias gst='git-status'
+alias openfiles='lsof'
+alias diffmate="cat > /tmp/diffmate.diff && e /tmp/diffmate.diff"
+alias gemdir="gem env gemdir"
+
+#alias rsync-toprank="echo rsync -vr --exclude=.* /Applications/MAMP/htdocs/toprank/ toprank@10.142.11.211:/var/www/html/toprank/toprank/"
+#alias rsync-skyfire="echo rsync -vr --exclude=.* /Applications/MAMP/htdocs/skyfire/skyfire/ skyfire@10.142.11.211:/var/www/html/skyfire/skyfire/"
+
+# alias javascript="java org.mozilla.javascript.tools.shell.Main"
+# alias rhino="java org.mozilla.javascript.tools.shell.Main"
+# alias js-rhino="java org.mozilla.javascript.tools.shell.Main"
+alias js="v8"
+alias js-v8="v8"
+
+
+
+h(){
+  if [ "$1" == "" ]; then
+    history
+  else
+    history | grep $*
+  fi
+}
+
+
+#alias dirsize='for DRCT in `ls --width=1 | grep /`; do du -s $DRCT; done;'
+#alias dirsize="du -s * | egrep '^[0-9]+(\.[0-9]+)*G' | sort; du -s * | egrep '^[0-9]+(\.[0-9]+)*M' | sort"
+#alias dirsize='du -hs $1 | sort_file_sizes';
+dirsize () { du -hs $1 | sort_file_sizes ; }
+tar2ssh () { 
+ echo tar -vczp $3 \| ssh $1 "cat > $2" ; 
+ tar -vczp $3 | ssh $1 "cat > $2" ; 
+}
+
+find(){
+  dir=$1
+  shift
+  env find "$dir" $* | grep -v .svn
+}
+
+psgrep(){
+  ps auxwww | grep -i $*
+}
+
+loop(){
+   while :; do echo "LOOPING: ${*}"; $*; done
+}

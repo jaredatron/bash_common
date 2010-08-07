@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+gemdoc() {
+  open `gem env gemdir`/doc/`$(which ls) $GEMDIR/doc | grep $1 | sort | tail -1`/rdoc/index.html
+}
+_gemdoc() {
+  COMPREPLY=($(compgen -W '$(`which ls` `gem env gemdir`/doc)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _gemdoc gemdoc

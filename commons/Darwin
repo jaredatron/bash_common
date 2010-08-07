@@ -1,15 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## Set PATH so it includes user's private script dir if it exists
-if [ -d ~/Library/Bin ] ; then
-	PATH=~/Library/Bin:$PATH
-fi
+[[ -d ~/Library/Bin       ]] && PATH=~/Library/Bin:$PATH
+[[ -d ~/.gem/ruby/1.8/bin ]] && PATH=~/.gem/ruby/1.8/bin:$PATH
 
-if [ -d ~/.gem/ruby/1.8/bin ] ; then
-	PATH=~/.gem/ruby/1.8/bin:$PATH
-fi
-
-export HISTSIZE=100000
 bind "set completion-ignore-case on"
 
 export LC_CTYPE=en_US.UTF-8
@@ -17,8 +11,6 @@ export HISTFILESIZE=1000000000
 export HISTSIZE=1000000
 export HTTPD_CONF="/private/etc/apache2/httpd.conf"
 export HTTPD_LOGS="/private/var/log/apache2/"
-#export SVN_EDITOR='mate -w ' this got annoying
-export SVN_EDITOR='vi'
 
 alias ls='/bin/ls -GF'
 alias o='open'
@@ -26,6 +18,7 @@ alias e="mate"
 alias pf="open -a Path\ Finder"
 alias restart-quicksilver='sudo killall Quicksilver; sleep 1; open /Applications/Quicksilver.app/'
 alias wrapinquotes='ruby -e "puts \$stdin.read.split(\"\n\").map{|l| \"\\\"#{l}\\\"\"}" '
+alias resource='(cd ~; source .bash_profile)'
 
 pslist(){
  ps aux | head -n 1;
@@ -52,8 +45,6 @@ complete -o default -o nospace -F _gemdoc gemdoc
 
 # alias hibernate="sudo pmset -a hibernatemode 5; sudo shutdown -s now && sudo pmset -a hibernatemode 3"
 
-alias resource='(cd ~; source .bash_profile)'
-
 # Commands for Terminal Usage
 tab(){
 osascript 2>/dev/null <<EOF
@@ -67,12 +58,3 @@ osascript 2>/dev/null <<EOF
   end tell
 EOF
 }
-
-set_title(){
-  export TITLE=$*
-  _set_title
-}
-_set_title(){
-  echo -ne "\033]0;${TITLE}\007"
-}
-export PROMPT_COMMAND="${PROMPT_COMMAND} _set_title"

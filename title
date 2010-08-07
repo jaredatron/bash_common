@@ -1,0 +1,8 @@
+title(){
+  export TITLE=$*
+  _set_title
+}
+_set_title(){
+  echo -ne "\033]0;${TITLE}\007"
+}
+export PROMPT_COMMAND="_set_title; $PROMPT_COMMAND"
