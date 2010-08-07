@@ -1,9 +1,4 @@
 #!/bin/bash
-pull_bash_common(){
-  echo pulling bash common
-  (cd $BASH_COMMON_PATH; git pull)
-  echo FUCK YOU > ~/tmp/out
-}
 #
 # # This script decides if it's been long enough since the last time it was loaded to
 # # attempt a git pull to automatically recieve updates

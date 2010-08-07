@@ -13,6 +13,7 @@ export PATH=$BASH_COMMON_PATH/bin:$PATH
 export HOSTFILE=$BASH_COMMON_PATH/hosts
 export SVN_EDITOR='vi'
 export EDITOR='vi'
+export GEM_EDITOR='mate'
 
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
