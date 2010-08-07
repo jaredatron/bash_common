@@ -36,7 +36,12 @@ complete -C $BASH_COMMON_PATH/rake_completion -o default rake
 
 export PROMPT_COLOR=33
 _set_ps1(){
-  PS1="\[\033[4;1;${PROMPT_COLOR}m\]\w\[\033[0m\]$(__git_ps1 '[%s]') "
+  if [[ "$PWD" == "$HOME" ]]; then
+    BRANCH=""
+  else
+    BRANCH="$(__git_ps1 '[%s]')"
+  fi
+  PS1="\[\033[4;1;${PROMPT_COLOR}m\]\w\[\033[0m\]$BRANCH "
 }
 export PROMPT_COMMAND="_set_ps1; $PROMPT_COMMAND"
 
